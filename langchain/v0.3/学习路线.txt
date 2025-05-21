@@ -1,0 +1,62 @@
+第一阶段：基础概念与核心接口
+Runnable接口（langchain_core.runnables.base）
+学习目标：理解LangChain的统一工作单元接口，掌握invoke/batch/stream等核心方法。
+关键点：
+Runnable是所有组件（如LLM、提示模板、输出解析器）的基类。
+通过LCEL（LangChain Expression Language）组合Runnable，实现同步、异步、批处理和流式传输。
+示例：RunnableSequence（链式调用）和RunnableParallel（并行调用）的构造方式。
+LangChain表达式语言（LCEL）
+学习目标：掌握声明式组合组件的方法，理解|操作符和字典字面量的用法。
+关键点：
+使用RunnableSequence按顺序执行组件（如“嵌入文本 → 检索相关文档 → 生成回答”）。
+通过RunnableParallel并行处理输入（如同时调用多个检索器）。
+第二阶段：核心功能模块
+链式处理（Chains）
+学习目标：构建多步骤流程，理解输入/输出传递机制。
+关键模块：
+SequentialChain：串联多个组件，前一步的输出作为下一步的输入。
+RunnablePassthrough：在并行处理中传递原始输入（如检索时保留用户查询）。
+实践案例：结合向量数据库（如FAISS）和LLM实现检索增强生成（RAG）。
+内存与状态管理（Memory）
+学习目标：管理对话历史和上下文，支持多轮对话。
+关键模块：
+ConversationBufferMemory：存储完整对话历史。
+ConversationSummaryMemory：生成历史摘要，节省Token。
+进阶：自定义内存模块，结合数据库持久化存储。
+提示工程与模板（Prompts）
+学习目标：优化LLM输入，提升生成质量。
+关键模块：
+PromptTemplate：动态注入变量（如用户问题、检索结果）。
+ChatPromptTemplate：处理多轮对话的上下文。
+技巧：使用StrOutputParser格式化输出（如JSON解析）。
+第三阶段：高级功能扩展
+工具调用与代理（Agents）
+学习目标：实现自主决策，调用外部工具（如搜索API、计算器）。
+关键模块：
+Agent：基于工具列表和LLM规划行动（如React框架）。
+工具集成：自定义工具（如GoogleSearchAPIWrapper）并注册到Agent。
+案例：构建能联网搜索的智能助手。
+输出解析与验证（Output Parsers）
+学习目标：确保LLM输出符合预期格式（如JSON、SQL）。
+关键模块：
+StrOutputParser：提取纯文本中的关键信息。
+PydanticOutputParser：验证结构化输出（如API响应）。
+第四阶段：集成与优化
+批处理与流式传输
+学习目标：提升处理效率，支持实时响应。
+关键方法：
+batch()：并行处理多个输入。
+stream()：逐Token生成输出（如聊天机器人实时显示）。
+自定义组件
+学习目标：扩展LangChain功能，适配特定场景。
+实践：实现自定义Runnable（如调用私有API）或修改LLM行为（如添加日志）。
+学习路线图总结
+基础 → 掌握Runnable和LCEL（2-3天）
+核心流程 → 链式处理、内存管理（3-5天）
+交互优化 → 提示工程、工具调用（5-7天）
+部署与扩展 → 批处理、自定义组件（根据项目需求）
+建议：从官方文档的
+How-to Guides
+入手，结合
+API Reference
+查阅具体模块参数。每个阶段完成后，尝试实现一个小项目（如RAG问答系统）巩固知识。
